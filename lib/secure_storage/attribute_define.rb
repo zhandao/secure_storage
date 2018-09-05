@@ -21,6 +21,8 @@ module SecureStorage
         value.respond_to?(:empty?) ? !value.empty? : !!value
       end
 
+      define_method(:attributes) { super().merge!(attr => send(attr)).stringify_keys! }
+
       define_singleton_method("find_by_#{attr}") { |value| xfind_by(attr => value) }
     end end
   end
