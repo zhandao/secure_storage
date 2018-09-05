@@ -6,7 +6,10 @@ module SecureStorage
           instance_variable_get("@#{attr}") ||
               instance_variable_set("@#{attr}", decrypt(send(secure_name_for attr)))
         rescue ArgumentError # invalid base64
-          send(secure_name_for attr).tap { |raw_val| update!(attr => raw_val) }
+          secure_name = secure_name_for attr
+          raw_val = send(secure_name)
+          update_columns(secure_name => encrypt(raw_val))
+          instance_variable_set("@#{attr}", raw_val)
         end
       end
 
