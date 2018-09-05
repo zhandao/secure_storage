@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    secure_storage (1.0.0)
+    secure_storage (2.0.0)
 
 GEM
   remote: https://rubygems.org/
