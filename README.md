@@ -1,26 +1,78 @@
 # SecureStorage
 
-transparent encryption storage.
+Transparent Encryption Storage. 
+It helps you automatically decrypt the fields you declared when they are saved and read.
+
+It use **Base64 encoded, AES256-CBC encrypt** by default (can not change currently).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'secure_storage'
+gem 'secure_storage', github: 'zhandao/secure_storage'
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install secure_storage
 
 ## Usage
 
-TODO: Write usage instructions here
+### Config
+
+In your model:
+
+```ruby
+self.secure_storage_key = Settings.secure_storage.key
+# self.prefix = 'encrypted_' # prefix for the columns name
+# self.suffix = ''           # suffix for the columns name
+```
+
+### Migration
+
+Change the fields' column name, as default:
+
+```ruby
+t.string :encrypted_email
+```
+
+### Declare
+
+In your model:
+
+```ruby
+has_secure :email#, :phone, ...
+```
+
+### Old Data Processing
+
+```ruby
+Model.secure_storage
+```
+
+Note: Unencrypted data will be encrypted automatically when read it.
+
+### Try It!
+
+```ruby
+Model.create(email: 'test@test.com')
+Model.first.email           # => 'test@test.com'
+Model.first.encrypted_email # => 'ENCRYPTED'
+```
+
+### Querying
+
+```ruby
+Model.find_by_email('test@test.com')         # ok
+Model.find(email: 'test@test.com')           # NO!
+Model.where(encrypted_email: 'ENCRYPTED')    # ok
+Model.with_encrypted(email: 'test@test.com') # ok
+Model.xwhere(email: 'test@test.com')         # ok
+```
+
+Suppose we have another encrypted `phone`:
+
+```ruby
+Model.xfind_by(email: 'test@test.com', phone: '123', not_enc_filed: 'foo')
+Model.xwhere(email: 'test@test.com', phone: '123', not_enc_filed: 'foo')
+```
 
 ## Development
 
