@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SecureStorage
   module Encryptor
     def encrypt(data)

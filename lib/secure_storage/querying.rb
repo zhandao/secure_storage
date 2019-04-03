@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SecureStorage
   module Querying
     def query_method_define; proc do

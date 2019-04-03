@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'secure_storage/version'
 require 'secure_storage/encryptor'
 require 'secure_storage/attribute_define'

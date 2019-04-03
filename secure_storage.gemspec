@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["zhandao"]
   spec.email         = ["x@skippingcat.com"]
 
-  spec.summary       = 'simple encryption storage'
-  spec.description   = 'simple encryption storage'
+  spec.summary       = 'Transparent Encryption Storage'
+  spec.description   = 'Transparent Encryption Storage. It helps you automatically decrypt the fields you declared when they are saved and read'
   spec.homepage      = "http://skippingcat.com"
   spec.license       = "MIT"
 
