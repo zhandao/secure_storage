@@ -7,7 +7,7 @@ module SecureStorage
         begin
           instance_variable_get("@#{attr}") ||
               instance_variable_set("@#{attr}", decrypt(send(secure_name_for attr)))
-        rescue ArgumentError # invalid base64
+        rescue ArgumentError, OpenSSL::Cipher::CipherError # invalid base64
           secure_name = secure_name_for attr
           raw_val = send(secure_name)
           update_columns(secure_name => encrypt(raw_val)) unless deleted?
