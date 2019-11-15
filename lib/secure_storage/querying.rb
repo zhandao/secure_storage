@@ -16,6 +16,17 @@ module SecureStorage
         find_by(**process.(queries.slice(*secure_fields)),
                 **queries.except(*secure_fields))
       end
+
+      define_singleton_method :xfind_by! do |queries|
+        find_by!(**process.(queries.slice(*secure_fields)),
+                **queries.except(*secure_fields))
+      end
+
+      define_singleton_method :xfind_or_initialize_by do |queries|
+        find_or_initialize_by(
+            **process.(queries.slice(*secure_fields)),
+            **queries.except(*secure_fields))
+      end
     end end
   end
 end
