@@ -3,7 +3,15 @@
 module SecureStorage
   module Querying
     def query_method_define; proc do
-      process = proc { |queries| queries.map { |k, v| [secure_name_for(k), encrypt(v)] }.to_h }
+      process = proc do |queries|
+        queries.map do |k, v|
+          if v.is_a?(Array)
+            [secure_name_for(k), v.map(&method(:encrypt))]
+          else
+            [secure_name_for(k), encrypt(v)]
+          end
+        end.to_h
+      end
 
       scope :with_encrypted, -> (queries) { where(process.(queries)) }
 

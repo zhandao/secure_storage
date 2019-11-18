@@ -10,7 +10,7 @@ module SecureStorage
         rescue ArgumentError, OpenSSL::Cipher::CipherError # invalid base64
           secure_name = secure_name_for attr
           raw_val = send(secure_name)
-          update_columns(secure_name => encrypt(raw_val)) unless deleted?
+          update_columns(secure_name => encrypt(raw_val)) if !deleted? && !new_record?
           instance_variable_set("@#{attr}", raw_val)
         end
       end
